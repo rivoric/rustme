@@ -1,2 +1,2 @@
 # rustme
-Basic Rust programming
+Basic Rust programming code snippets and documentation
