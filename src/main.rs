@@ -1,6 +1,6 @@
 use std::mem;
 
-fn main() {
+fn value_types () { // this function returns an empty tuple, ie. -> ()
     // different integer types
     // all integers can be either unsigned (starts with a u) or signed (starts with an i)
     let unsigned_byte:u8 = 65;
@@ -28,12 +28,12 @@ fn main() {
     let mychar:char = 'r';
     println!("A single character is indicated by char and takes {} bytes", mem::size_of_val(&mychar));
 
-    // array
+    // array (making this mutable)
     let mut myarr:[i32; 5] = [1,2,3,4,5]; // zero shortcut [0;5]
     println!("An array is indicated by [type; num elements] - {} elements takes {} bytes", myarr.len(), mem::size_of_val(&myarr));
     myarr[0] = 0; // arrays are 0 based
     println!("To print use the debug flag :? giving {:?}", myarr);
-    let slice = &myarr[0..2]; // inclusive 0th element, exclusive 2nd element
+    let slice = &myarr[0..2]; // inclusive 0 (first) element, exclusive 2 (third) element; so first and second elements
     println!("Also use debug to print a slice {:?}", slice);
 
     // tuple
@@ -43,7 +43,44 @@ fn main() {
     let (first, second, _, _) = mytuple; // destructing discaring 3rd and 4th
     println!("The first three values are {}, {} & {}", first, second, mytuple.2); // tuples are 0 based
 
-    // string slice
+    // string slice (see std_ref_types for String type)
     let strslice = "My string"; // type &str
     println!("A str slice (reference) denoted by &str - {}", strslice);
+}
+
+struct Size {
+    width: u32,
+    height: u32
+}
+
+fn fn_area (obj: &Size) -> u32 {
+    obj.width * obj.height // return
+}
+
+fn std_ref_types() {
+    // String
+    let h = "Hello ".to_string();
+    let w = String::from("world!");
+    let mystr = h + &w; // concat string (note the reference on the second)
+    println!("Concatenated string {}", mystr);
+
+    // moving ownership - same thing happens if you move the ownership to a function
+    let moved_string = mystr;
+    println!("Ownership of String moved {}", moved_string);
+    // cannot now use mystr
+
+    // Vec (vector)
+    let mut v = Vec::new();
+    v.push(1);
+    println!("First value of vector {}", v[0]); // vector like array are 0 based
+
+    // Structure
+    let mysize = Size { width: 20, height: 10};
+    println!("Area of {} x {} is {}", mysize.width, mysize.height, fn_area(&mysize));
+    // impl (object) will be covered later
+}
+
+fn main() {
+    value_types();
+    std_ref_types();
 }
