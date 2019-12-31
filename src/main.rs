@@ -27,4 +27,23 @@ fn main() {
     // character
     let mychar:char = 'r';
     println!("A single character is indicated by char and takes {} bytes", mem::size_of_val(&mychar));
+
+    // array
+    let mut myarr:[i32; 5] = [1,2,3,4,5]; // zero shortcut [0;5]
+    println!("An array is indicated by [type; num elements] - {} elements takes {} bytes", myarr.len(), mem::size_of_val(&myarr));
+    myarr[0] = 0; // arrays are 0 based
+    println!("To print use the debug flag :? giving {:?}", myarr);
+    let slice = &myarr[0..2]; // inclusive 0th element, exclusive 2nd element
+    println!("Also use debug to print a slice {:?}", slice);
+
+    // tuple
+    let mytuple:(i32, f64, char, [i32; 5]) = (65, 65.0, 'r', myarr);
+    println!("A tuple indicated by (type, ...) with any type include arrays and tuples");
+    println!("{:#?}", mytuple);
+    let (first, second, _, _) = mytuple; // destructing discaring 3rd and 4th
+    println!("The first three values are {}, {} & {}", first, second, mytuple.2); // tuples are 0 based
+
+    // string slice
+    let strslice = "My string"; // type &str
+    println!("A str slice (reference) denoted by &str - {}", strslice);
 }
